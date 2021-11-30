@@ -1,7 +1,9 @@
+local QBCore = exports['qb-core']:GetCoreObject()
+
 -- qb-target
 
 Citizen.CreateThread(function()
-	exports['qb-target']:AddBoxZone("tequilalaDuty", vector3(-564.37, 278.34, 83.14), 1, 1.2, {
+    exports['qb-target']:AddBoxZone("tequilalaDuty", vector3(-564.37, 278.34, 83.14), 1, 1.2, {
         name = "tequilalaDuty",
         heading = 32,
         debugPoly = false,
@@ -10,7 +12,7 @@ Citizen.CreateThread(function()
     }, {
         options = {
             {  
-                event = "qb-tequilalajob:Duty",
+                event = "qb-menu:TequilalaDutyMenu",
                 icon = "far fa-clipboard",
                 label = "Clock On/Off",
                 job = "tequilala",
@@ -19,7 +21,7 @@ Citizen.CreateThread(function()
         distance = 1.5
     })
 
-	exports['qb-target']:AddBoxZone("tequilala_tray_1", vector3(-561.03, 286.61, 81.93), 1.05, 1.0, {
+    exports['qb-target']:AddBoxZone("tequilala_tray_1", vector3(-561.03, 286.61, 81.93), 1.05, 1.0, {
         name = "tequilala_tray_1",
         heading = 35.0,
         debugPoly = false,
@@ -36,7 +38,7 @@ Citizen.CreateThread(function()
         distance = 1.5
     })
 
-	exports['qb-target']:AddBoxZone("tequilalapump", vector3(-561.1, 288.11, 82.18), 1.05, 0.7, {
+    exports['qb-target']:AddBoxZone("tequilalapump", vector3(-561.1, 288.11, 82.18), 1.05, 0.7, {
         name ="tequilalapump",
         heading = 10,
         debugPoly = false,
@@ -45,7 +47,7 @@ Citizen.CreateThread(function()
     }, {
         options = {
             {
-                event = "nh-context:tequilalaBeerMenu",
+                event = "qb-menu:TequilalaBeerMenu",
                 icon = "fas fa-filter",
                 label = "Pour a Pint",
                 job = "tequilala",
@@ -54,23 +56,23 @@ Citizen.CreateThread(function()
         distance = 1.5
     })
 
-	exports['qb-target']:AddBoxZone("tequilalamixer", vector3(-562.94, 285.7, 82.18), 1.05, 0.5, {
-		name ="tequilalamixer",
-		heading = 10,
-		debugPoly = false,
-		minZ=82.0,
+    exports['qb-target']:AddBoxZone("tequilalamixer", vector3(-562.94, 285.7, 82.18), 1.05, 0.5, {
+        name ="tequilalamixer",
+        heading = 10,
+        debugPoly = false,
+        minZ=82.0,
         maxZ=82.8,
-	}, {
-	    options = {
-			{
-    		    event = "nh-context:tequilalaMixerMenu",
-    		    icon = "fas fa-box",
-    		    label = "Make Cocktails",
-    		    job = "tequilala",
-			},
-	    },
-	    distance = 2.5
-	})
+    }, {
+        options = {
+            {
+                event = "qb-menu:TequilalaMixerMenu",
+                icon = "fas fa-box",
+                label = "Make Cocktails",
+                job = "tequilala",
+            },
+        },
+        distance = 2.5
+    })
 
     exports['qb-target']:AddBoxZone("tequilalafridge", vector3(-562.79, 289.55, 82.23), 1.05, 1.0, {
         name ="tequilalafridge",
@@ -81,7 +83,7 @@ Citizen.CreateThread(function()
     }, {
         options = {
             {
-                event = "nh-context:tequilalaMenu",
+                event = "qb-menu:TequilalaMenu",
                 icon = "fas fa-laptop",
                 label = "Buy Items Or Check Storage!",
                 job = "tequilala",
@@ -149,7 +151,7 @@ Citizen.CreateThread(function()
         distance = 1.5
     })
 
--- Uncomment if you have a MLO/MAP that includes the upstairs bar
+-- Upstairs Bar
 
     --[[exports['qb-target']:AddBoxZone("tequilala_tray_2", vector3(-564.32, 285.46, 85.33), 1.05, 0.5, {
         name = "tequilala_tray_2",
@@ -177,7 +179,7 @@ Citizen.CreateThread(function()
     }, {
         options = {
             {
-                event = "nh-context:tequilalaBeerMenu",
+                event = "qb-menu:TequilalaBeerMenu",
                 icon = "fas fa-filter",
                 label = "Pour a Pint",
                 job = "tequilala",
@@ -195,7 +197,7 @@ Citizen.CreateThread(function()
     }, {
         options = {
             {
-                event = "nh-context:tequilalaMixerMenu",
+                event = "qb-menu:TequilalaMixerMenu",
                 icon = "fas fa-box",
                 label = "Make Cocktails",
                 job = "tequilala",
@@ -232,7 +234,7 @@ Citizen.CreateThread(function()
     }, {
         options = {
             {
-                event = "nh-context:tequilalaMenu",
+                event = "qb-menu:TequilalaMenu",
                 icon = "fas fa-laptop",
                 label = "Buy Items Or Check Storage!",
                 job = "tequilala",
@@ -244,72 +246,66 @@ Citizen.CreateThread(function()
 end)
 
 
--- NH - Context --
+-- qb-menu --
 
-RegisterNetEvent('nh-context:tequilalaMenu', function(data)
-    TriggerEvent('nh-context:sendMenu', {
-        {
-            id = 0,
+RegisterNetEvent('qb-menu:TequilalaMenu', function(data)
+    exports['qb-menu']:openMenu({
+        { 
             header = "| Fridge |",
-            txt = "",
+            isMenuHeader = true
         },
-        {
-            id = 1,
+        { 
             header = "• Order Items",
             txt = "Buy items from the shop!",
             params = {
                 event = "qb-tequilalajob:shop"
             }
         },
-        {
-            id = 2,
+        { 
             header = "• Open Fridge",
             txt = "See what you have in storage",
-            params = {
+            params = { 
                 event = "qb-tequilalajob:Storage2"
             }
         },
         {
-            id = 3,
-            header = "Close (ESC)",
-            txt = "",
+            header = "• Close Menu",
+            txt = "", 
+            params = { 
+                event = "qb-menu:client:closeMenu"
+            }
         },
     })
 end)
 
-RegisterNetEvent('nh-context:tequilalaBeerMenu', function(data)
-    TriggerEvent('nh-context:sendMenu', {
-        {
-            id = 0,
+RegisterNetEvent('qb-menu:TequilalaBeerMenu', function(data)
+    exports['qb-menu']:openMenu({
+        { 
             header = "| Beer Menu |",
-            txt = "",
+            isMenuHeader = true
         },
-        {
-            id = 1,
+        { 
             header = "• A.M. Beer",
             txt = "Pint Glass",
             params = {
                 event = "qb-tequilalajob:am-beer"
             }
         },
-        {
-            id = 2,
+        { 
             header = "• Logger Beer",
             txt = "Pint Glass",
             params = {
                 event = "qb-tequilalajob:logger-beer"
             }
         },
-        {
-            id = 3,
+        { 
             header = "• Stronzo Beer",
             txt = "Pint Glass",
             params = {
                 event = "qb-tequilalajob:stronzo-beer"
             }
         },
-        {
-            id = 4,
+        { 
             header = "• Dusche Beer",
             txt = "Pint Glass",
             params = {
@@ -317,22 +313,22 @@ RegisterNetEvent('nh-context:tequilalaBeerMenu', function(data)
             }
         },
         {
-            id = 5,
-            header = "Close (ESC)",
-            txt = "",
+            header = "• Close Menu",
+            txt = "", 
+            params = { 
+                event = "qb-menu:client:closeMenu"
+            }
         },
     })
 end)
 
-RegisterNetEvent('nh-context:tequilalaMixerMenu', function(data)
-    TriggerEvent('nh-context:sendMenu', {
-        {
-            id = 0,
+RegisterNetEvent('qb-menu:TequilalaMixerMenu', function(data)
+    exports['qb-menu']:openMenu({
+        { 
             header = "| Mixer Menu |",
-            txt = "",
+            isMenuHeader = true
         },
-        {
-            id = 1,
+        { 
             header = "• Sunny Cocktail",
             txt = "Cocktail Glass",
             params = {
@@ -340,34 +336,65 @@ RegisterNetEvent('nh-context:tequilalaMixerMenu', function(data)
             }
         },
         {
-            id = 2,
-            header = "Close (ESC)",
-            txt = "",
+            header = "• Close Menu",
+            txt = "", 
+            params = { 
+                event = "qb-menu:client:closeMenu"
+            }
         },
     })
 end)
 
+RegisterNetEvent('qb-menu:TequilalaDutyMenu', function(data)
+    exports['qb-menu']:openMenu({
+        { 
+            header = "| Clocking in/Off work |",
+            isMenuHeader = true
+        },
+        { 
+            header = "• Sign In/Off",
+            txt = "",
+            params = {
+                event = "qb-tequilalajob:Duty",
+            }
+        },
+        {
+            header = "• Close Menu",
+            txt = "", 
+            params = { 
+                event = "qb-menu:client:closeMenu"
+            }
+        },
+    })
+end)
+
+local function closeMenuFull()
+    exports['qb-menu']:closeMenu()
+end
+
 
 -- Register Stuff --
-RegisterNetEvent("qb-tequilalajob:bill")
-AddEventHandler("qb-tequilalajob:bill", function()
-    local bill = exports["nh-keyboard"]:KeyboardInput({
-        header = "Create Receipt",
-        rows = {
+RegisterNetEvent("qb-tequilalajob:bill", function()
+    local dialog = exports['qb-input']:ShowInput({
+        header = "Till",
+        submitText = "Bill Person",
+        inputs = {
             {
-                id = 0,
-                txt = "PayPal Number"
+                type = 'number',
+                isRequired = true,
+                name = 'id',
+                text = 'paypal id'
             },
             {
-                id = 1,
-                txt = "Amount"
+                type = 'number',
+                isRequired = true,
+                name = 'amount',
+                text = '$ amount!'
             }
         }
     })
-    if bill ~= nil then
-        if bill[1].input == nil or bill[2].input == nil then 
-            return 
-        end
-        TriggerServerEvent("qb-tequilalajob:bill:player", bill[1].input, bill[2].input)
+    if dialog then
+        if not dialog.id or not dialog.amount then return end
+        TriggerServerEvent("qb-tequilalajob:bill:player", dialog.id, dialog.amount)
     end
 end)

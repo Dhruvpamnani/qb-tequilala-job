@@ -35,7 +35,7 @@ Citizen.CreateThread(function()
                             end
                             if IsControlJustReleased(0, 38) then
                                 onDuty = not onDuty
-                                TriggerServerEvent("QBCore:ToggleDuty")
+                                TriggerServerEvent("qb-menu:TequilalaDutyMenu")
                             end
                         elseif #(pos - vector3(v.x, v.y, v.z)) < 2.5 then
                             sleep = 5
@@ -51,7 +51,7 @@ Citizen.CreateThread(function()
                                 sleep = 5
                                 DrawText3D(v.x, v.y, v.z, "~g~E~w~ -  Pour Beer")
                                 if IsControlJustReleased(0, 38) then
-                                    TriggerEvent("nh-context:BeerMenu")
+                                    TriggerEvent("qb-menu:TequilalaBeerMenu")
                                 end
                             elseif #(pos - vector3(v.x, v.y, v.z)) < 2.5 then
                                 sleep = 5
@@ -68,7 +68,7 @@ Citizen.CreateThread(function()
                                 sleep = 5
                                 DrawText3D(v.x, v.y, v.z, "~g~E~w~ -  Mix Drinks")
                                 if IsControlJustReleased(0, 38) then
-                                    TriggerEvent("nh-context:MixerMenu")
+                                    TriggerEvent("qb-menu:TequilalaMixerMenu")
                                 end
                             elseif #(pos - vector3(v.x, v.y, v.z)) < 2.5 then
                                 sleep = 5
@@ -85,7 +85,7 @@ Citizen.CreateThread(function()
                                 sleep = 5
                                 DrawText3D(v.x, v.y, v.z, "~g~E~w~ -  Open Fridge")
                                 if IsControlJustReleased(0, 38) then
-                                    TriggerEvent("nh-context:tequilalaMenu")
+                                    TriggerEvent("qb-menu:TequilalaMenu")
                                 end
                             elseif #(pos - vector3(v.x, v.y, v.z)) < 2.5 then
                                 sleep = 5
@@ -151,7 +151,7 @@ Citizen.CreateThread(function()
 
             -- Uncomment if you have a MLO/MAP that includes the upstairs bar
 
-            for k, v in pairs(Config.Locations["tray2"]) do
+            --[[for k, v in pairs(Config.Locations["tray2"]) do
                 if #(pos - vector3(v.x, v.y, v.z)) < 4.5 then
                         if #(pos - vector3(v.x, v.y, v.z)) < 1.5 then
                             sleep = 5
@@ -164,78 +164,72 @@ Citizen.CreateThread(function()
                             DrawText3D(v.x, v.y, v.z, "Tray")
                         end  
                 end
-            end
+            end]]
         end
         Citizen.Wait(sleep)
     end
 end)
 
--- NH - Context --
+-- qb-menu --
 
-RegisterNetEvent('nh-context:tequilalaMenu', function(data)
-    TriggerEvent('nh-context:sendMenu', {
-        {
-            id = 0,
+RegisterNetEvent('qb-menu:TequilalaMenu', function(data)
+    exports['qb-menu']:openMenu({
+        { 
             header = "| Fridge |",
-            txt = "",
+            isMenuHeader = true
         },
-        {
-            id = 1,
+        { 
             header = "• Order Items",
             txt = "Buy items from the shop!",
             params = {
                 event = "qb-tequilalajob:shop"
             }
         },
-        {
-            id = 2,
+        { 
             header = "• Open Fridge",
             txt = "See what you have in storage",
-            params = {
+            params = { 
                 event = "qb-tequilalajob:Storage2"
             }
         },
         {
-            id = 3,
-            header = "Close (ESC)",
-            txt = "",
+            header = "• Close Menu",
+            txt = "", 
+            params = { 
+                event = "qb-menu:client:closeMenu"
+            }
         },
     })
 end)
 
-RegisterNetEvent('nh-context:tequilalaBeerMenu', function(data)
-    TriggerEvent('nh-context:sendMenu', {
-        {
-            id = 0,
+RegisterNetEvent('qb-menu:TequilalaBeerMenu', function(data)
+    exports['qb-menu']:openMenu({
+        { 
             header = "| Beer Menu |",
-            txt = "",
+            isMenuHeader = true
         },
-        {
-            id = 1,
+        { 
             header = "• A.M. Beer",
             txt = "Pint Glass",
             params = {
                 event = "qb-tequilalajob:am-beer"
             }
         },
-        {
-            id = 2,
+        { 
             header = "• Logger Beer",
             txt = "Pint Glass",
             params = {
                 event = "qb-tequilalajob:logger-beer"
             }
         },
-        {
-            id = 3,
+        { 
             header = "• Stronzo Beer",
             txt = "Pint Glass",
             params = {
                 event = "qb-tequilalajob:stronzo-beer"
             }
         },
-        {
-            id = 4,
+        { 
             header = "• Dusche Beer",
             txt = "Pint Glass",
             params = {
@@ -243,22 +237,22 @@ RegisterNetEvent('nh-context:tequilalaBeerMenu', function(data)
             }
         },
         {
-            id = 5,
-            header = "Close (ESC)",
-            txt = "",
+            header = "• Close Menu",
+            txt = "", 
+            params = { 
+                event = "qb-menu:client:closeMenu"
+            }
         },
     })
 end)
 
-RegisterNetEvent('nh-context:tequilalaMixerMenu', function(data)
-    TriggerEvent('nh-context:sendMenu', {
-        {
-            id = 0,
+RegisterNetEvent('qb-menu:TequilalaMixerMenu', function(data)
+    exports['qb-menu']:openMenu({
+        { 
             header = "| Mixer Menu |",
-            txt = "",
+            isMenuHeader = true
         },
-        {
-            id = 1,
+        { 
             header = "• Sunny Cocktail",
             txt = "Cocktail Glass",
             params = {
@@ -266,34 +260,64 @@ RegisterNetEvent('nh-context:tequilalaMixerMenu', function(data)
             }
         },
         {
-            id = 2,
-            header = "Close (ESC)",
-            txt = "",
+            header = "• Close Menu",
+            txt = "", 
+            params = { 
+                event = "qb-menu:client:closeMenu"
+            }
         },
     })
 end)
 
+RegisterNetEvent('qb-menu:TequilalaDutyMenu', function(data)
+    exports['qb-menu']:openMenu({
+        { 
+            header = "| Clocking in/Off work |",
+            isMenuHeader = true
+        },
+        { 
+            header = "• Sign In/Off",
+            txt = "",
+            params = {
+                event = "qb-tequilalajob:Duty",
+            }
+        },
+        {
+            header = "• Close Menu",
+            txt = "", 
+            params = { 
+                event = "qb-menu:client:closeMenu"
+            }
+        },
+    })
+end)
+
+local function closeMenuFull()
+    exports['qb-menu']:closeMenu()
+end
 
 -- Register Stuff --
-RegisterNetEvent("qb-tequilalajob:bill")
-AddEventHandler("qb-tequilalajob:bill", function()
-    local bill = exports["nh-keyboard"]:KeyboardInput({
-        header = "Create Receipt",
-        rows = {
+RegisterNetEvent("qb-tequilalajob:bill", function()
+    local dialog = exports['qb-input']:ShowInput({
+        header = "Till",
+        submitText = "Bill Person",
+        inputs = {
             {
-                id = 0,
-                txt = "PayPal Number"
+                type = 'number',
+                isRequired = true,
+                name = 'id',
+                text = 'paypal id'
             },
             {
-                id = 1,
-                txt = "Amount"
+                type = 'number',
+                isRequired = true,
+                name = 'amount',
+                text = '$ amount!'
             }
         }
     })
-    if bill ~= nil then
-        if bill[1].input == nil or bill[2].input == nil then 
-            return 
-        end
-        TriggerServerEvent("qb-tequilalajob:bill:player", bill[1].input, bill[2].input)
+    if dialog then
+        if not dialog.id or not dialog.amount then return end
+        TriggerServerEvent("qb-tequilalajob:bill:player", dialog.id, dialog.amount)
     end
 end)

@@ -4,7 +4,9 @@ Enables Patoche's Tequilala to have employee's.
 ## Dependencies  ##
 [QBCore](https://github.com/qbcore-framework/qb-core)
 
-[nh-context](https://github.com/nerohiro/nh-context)
+[qb-menu](https://github.com/qbcore-framework/qb-menu)
+
+[qb-input](https://github.com/qbcore-framework/qb-input)
 
 ## Optional ##
 [qb-target](https://github.com/BerkieBb/qb-target)
@@ -21,7 +23,7 @@ Hassaric has 3 different states of Tequilala, Construction, nomusic and with mus
 ## Credit ##
 Credit all goes to these people as if it wasn't for them I wouldn't have been able to get this script to work.
 
-Original Creator [DrBlackBeard095](https://github.com/DrBlackBeard095) of [qb-burgershot](https://github.com/DrBlackBeard095/Qb-Burgershot)
+Original Creator [Zach488](https://github.com/Zach488) of [qb-burgershot](https://github.com/Zach488/qb-burgershot)
 
 Forked from [lilphantom25](https://github.com/lilphantom25) [qb-cyberbarjob](https://github.com/lilphantom25/qb-cyberbarjob)
 
