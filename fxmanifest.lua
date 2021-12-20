@@ -1,13 +1,12 @@
 fx_version 'cerulean'
 game 'gta5'
 
-author 'DrB1ackBeard'
-description 'qb-tequilalajob for QBCore Adapted By McKlean'
+author 'McKlean'
+description 'Tequilala Job for QBCore'
 version '2.2.0'
 
 shared_scripts {
     'config.lua',
-    '@qb-core/import.lua'
 }
 
 client_scripts {
